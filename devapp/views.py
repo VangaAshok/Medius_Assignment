@@ -1,11 +1,11 @@
 from django.core.mail import send_mail
 from django.shortcuts import render
-from .forms import ExcelUploadForm
+from .forms import UploadForm
 import pandas as pd
 
-def upload_excel(request):
+def upload_file(request):
     if request.method == 'POST':
-        form = ExcelUploadForm(request.POST, request.FILES)
+        form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             # Get the uploaded file
             excel_file = request.FILES['file']
@@ -18,7 +18,6 @@ def upload_excel(request):
                 'total_rows': df.shape[0],
                 'total_columns': df.shape[1],
                 'column_names': df.columns.tolist(),
-                'summary_stats': df.describe().to_string(),
             }
             
             # Prepare the email content
@@ -30,8 +29,6 @@ def upload_excel(request):
             Total Columns: {summary['total_columns']}
             Column Names: {', '.join(summary['column_names'])}
 
-            Summary Statistics:
-            {summary['summary_stats']}
             """
             
             # List of recipients
@@ -46,8 +43,8 @@ def upload_excel(request):
                 fail_silently=False,
             )
             
-            return render(request, 'excel_summary.html', {'summary': summary})
+            return render(request, 'summary.html', {'summary': summary})
     else:
-        form = ExcelUploadForm()
+        form = UploadForm()
 
-    return render(request, 'upload_excel.html', {'form': form})
+    return render(request, 'upload.html', {'form': form})

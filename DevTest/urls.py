@@ -20,6 +20,6 @@ from devapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload-excel/', views.upload_excel, name='upload_excel'),
+    path('upload-file/', views.upload_file, name='upload_file'),
 ]
 
