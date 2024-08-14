@@ -28,16 +28,11 @@ def upload_file(request):
 
             # Generate the table content
             table_content = "\n".join(
-                f"<tr><td style='border:1px solid black;/n
-                border-collapse:collapse'>/n
-                {row['Cust_State']}</td>
-                <td style='border:1px solid black;/n
-                border-collapse:collapse'>
-                {row['Cust_Pin']}
-                <td style='border:1px solid black;border-collapse:collapse'>
-                {row['DPD']} </td></tr>"
-                for _, row in selected_columns.iterrows()
-            )
+                f"<tr><td style='border:1px solid black; border-collapse:collapse'>{row['Cust_State']}</td><td style='border:1px solid black; border-collapse:collapse'>{row['Cust_Pin']}<td style='border:1px solid black;border-collapse:collapse'>{row['DPD']} </td></tr>"
+                
+                
+            
+            for _, row in selected_columns.iterrows())
             data = [row for _, row in selected_columns.iterrows()]
             
             # Prepare the email content
@@ -55,7 +50,7 @@ def upload_file(request):
             <table  style="border:1px solid black;border-collapse:collapse">
             <tr>
             <th style="border:1px solid black;border-collapse:collapse">State</th>
-            <th style="border:1px solid black;border-collapse:collapse">Postal Code</th>
+            <th style="border:1px solid black;border-collapse:collapse">Cust Pin</th>
             <th style="border:1px solid black;border-collapse:collapse">DPD</th>
             </tr>
             {table_content}
